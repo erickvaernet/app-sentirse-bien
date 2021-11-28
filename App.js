@@ -1,120 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View, TextInput, ImageBackground,Alert, TouchableOpacity } from 'react-native';
-import { useFonts } from 'expo-font';
+
+import * as React from 'react';
+import { View, Text, Button } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Login from './Login';
+import Index from './Index';
+import CrearTurnos from './CrearTurno';
+import Turnos from './Turnos';
 
 
-export default function App() {
-  const [loaded] = useFonts({
-    Rochester: require('./assets/fonts/Rochester-Regular.ttf'),
-    Roboto: require('./assets/fonts/Roboto/Roboto-Regular.ttf')
-  });  
-  if (!loaded) {
-    return null;
-  }
-  return (    
-    <ImageBackground source={require("./assets/img/fondos/fondo-login.jpg")} style={styles.imagen}>
-    <View style={styles.base}>  
-    
-      <View>
-        <Text style={styles.titulo}>Spa Sentirse Bien</Text>
-      </View>
-      <View style={styles.fondoForms}>
-        <TextInput style={styles.inputLogin} placeholder="e-mail"/>
-        <TextInput style={styles.inputLogin}  placeholder="contraseña"/>
-        <View style={styles.contenedorRow}>
-          <TouchableOpacity onPress={() => Alert.alert('Button with adjusted color pressed')}
-          style={styles.botonLogin}>
-            <Text style={styles.normalText}>Registrarse</Text>
-          </TouchableOpacity>   
-          <TouchableOpacity onPress={() => Alert.alert('Button with adjusted color pressed')}
-          style={styles.botonLogin}>
-            <Text style={styles.normalText}>Ingresar</Text>
-          </TouchableOpacity>    
-        </View>
-      </View>
-      <StatusBar style="auto" />
+function HomeScreen({ navigation }) {
+return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <Text>Home Screen</Text>
+    <Button
+        title="Go to Details"
+        onPress={() => navigation.navigate('Login')}
+    />
     </View>
-    </ImageBackground>
+);
+}
+
+
+const Stack = createNativeStackNavigator();
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Index" component={Index} />
+        <Stack.Screen name="Turnos" component={Turnos} />        
+        <Stack.Screen name="CrearTurnos" component={CrearTurnos} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  imagen:{
-    flex: 1,
-    justifyContent: 'center',
-  },
-  base:{
-    margin: 0,
-    padding: 0,
-    fontFamily: "Roboto",
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-  fondoInicial:{
-  },
-  titulo:{
-    color: "#FA03E6",
-    fontFamily: "Rochester",
-    fontWeight: "400",
-    fontSize: 60,
-    marginTop: 85,
-  },
-  contenedorCentrado:
-  {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start',  
-  },
-  ancho100:{
-    width:"100%",
-  },
-  ancho80:{
-    width:"80%",
-  },
-  fondoForms:{
-    margin:70,
-    width:"90%",
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',    
-    borderRadius: 100,
-    flex:1, 
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingTop:30,
-    maxHeight:300,
-    minHeight:300,
-  },
-  inputLogin:{
-    height: 50,
-    fontSize: 15,
-    color: "black",
-    borderWidth:1,
-    borderRadius: 50,
-    margin: 12,
-    padding: 10,
-    backgroundColor: "#ffffff",
-    width:"80%",
-  },
-  contenedorRow:{    
-    flexDirection:'row',
-    justifyContent:'space-between',
-    alignItems:"center",
-    padding:0,
-    margin:0,
-  },
-  botonLogin:{
-    margin: 10,
-    backgroundColor: "#008000",
-    borderStyle: "solid",
-    borderWidth:1,
-    borderColor: "#ff0000",
-    borderRadius:50,
-    padding:10,
-  },
-  normalText:{
-    fontFamily: "Roboto",
-    fontSize: 20,
-    color:"#ffffff",
-  }
-});
+export default App;
